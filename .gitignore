@@ -1,0 +1,36 @@
+# ── Redundant pre-reorganisation backup (1.5 MB) ──────────────
+# A full copy of the messy original folder layout. What it contained is
+# already documented in VERSION-MANIFEST.md, so it adds weight to every
+# clone without adding information. The file stays on the local disk.
+OLD-UNSORTED-BACKUP.zip
+
+# ── Accidentally nested duplicate sketch folders ──────────────
+# These sit inside Beta/V12-V1.3.2/ but are byte-identical copies of the
+# sibling folders one level up at Beta/ (verified with cmp). Excluded so the
+# history reads cleanly; the originals remain tracked at Beta/ level.
+3-laser/Beta/V12-V1.3.2/V01-Base/
+3-laser/Beta/V12-V1.3.2/V02-V1.0/
+3-laser/Beta/V12-V1.3.2/V04-V1.1-WorkGood/
+3-laser/Beta/V12-V1.3.2/V05-V1.1-MoreSenseSpeed/
+3-laser/Beta/V12-V1.3.2/V06-V1.1.0/
+3-laser/Beta/V12-V1.3.2/V10-V1.2-Sensor2LCD/
+3-laser/Beta/V12-V1.3.2/V11-V1.3.1/
+
+# ── Secrets — never commit real WiFi credentials ──────────────
+secrets.h
+
+# ── Arduino / PlatformIO build artefacts ──────────────────────
+build/
+*.bin
+*.elf
+*.map
+*.hex
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# ── Editor / OS cruft ─────────────────────────────────────────
+.vscode/
+.DS_Store
+Thumbs.db
+*.lnk

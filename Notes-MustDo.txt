@@ -1,0 +1,7 @@
+1.Make body with 3d printer (body)
+2.Make a cap for IR sensor (Or use PIR sensor)(hardware - body)
+3.Put a mesh filter for pump(body)
+4.If cat stand on front of fountain (stand front of IR sensor ) don cutoff a replay pump just after the last time finish add a sensor time to time and pumping non stop(software)
+5.If Push play on app phone disable button and IR sensor Trigger if run from button disable app and IR if run IR disable button and app(software)
+6.Make a board without any wire around the board(hardware)
+7.Test  2hours

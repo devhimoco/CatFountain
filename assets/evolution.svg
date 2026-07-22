@@ -1,0 +1,106 @@
+<svg width="1200" height="430" viewBox="0 0 1200 430" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1200" height="430" rx="14" fill="#FBFCFD"/>
+  <rect x="0.5" y="0.5" width="1199" height="429" rx="14" fill="none" stroke="#E3E8EF"/>
+
+  <text x="600" y="46" text-anchor="middle" font-size="25" font-weight="700" fill="#12161F">PooKooli Fountain — three generations of sensing</text>
+  <text x="600" y="72" text-anchor="middle" font-size="14" fill="#5A6678">Each generation replaced the one before it because of a physical limit, not a software bug</text>
+
+  <!-- ══════════ GEN V — INFRARED ══════════ -->
+  <g>
+    <rect x="40" y="100" width="340" height="272" rx="12" fill="#FFFFFF" stroke="#E3E8EF"/>
+    <rect x="40" y="100" width="340" height="5" rx="2.5" fill="#E8830C"/>
+
+    <!-- IR waves icon -->
+    <g transform="translate(72,140)" stroke="#E8830C" fill="none" stroke-width="2.4" stroke-linecap="round">
+      <circle cx="6" cy="18" r="4.5" fill="#E8830C" stroke="none"/>
+      <path d="M16 8 A 14 14 0 0 1 16 28"/>
+      <path d="M24 2 A 22 22 0 0 1 24 34"/>
+      <path d="M32 -4 A 30 30 0 0 1 32 40"/>
+    </g>
+
+    <text x="128" y="152" font-size="13" font-weight="700" fill="#E8830C" letter-spacing="1.2">GENERATION V</text>
+    <text x="128" y="176" font-size="21" font-weight="700" fill="#12161F">Infrared / PIR</text>
+
+    <text x="72" y="215" font-size="13" fill="#5A6678">Sensor</text>
+    <text x="200" y="215" font-size="13" font-weight="600" fill="#12161F">IR + PIR, relay pump</text>
+    <text x="72" y="240" font-size="13" fill="#5A6678">Sketches</text>
+    <text x="200" y="240" font-size="13" font-weight="600" fill="#12161F">18</text>
+    <text x="72" y="265" font-size="13" fill="#5A6678">Arc</text>
+    <text x="200" y="265" font-size="13" font-weight="600" fill="#12161F">BLE → WiFi → MOSFET</text>
+
+    <line x1="72" y1="286" x2="348" y2="286" stroke="#EDF1F6"/>
+    <text x="72" y="310" font-size="12" font-weight="700" fill="#9AA5B5">WHY IT ENDED</text>
+    <text x="72" y="332" font-size="13" fill="#3E4959">PIR sees body heat <tspan font-style="italic">in motion</tspan>. A cat sitting</text>
+    <text x="72" y="352" font-size="13" fill="#3E4959">still to drink simply stops triggering it.</text>
+  </g>
+
+  <path d="M392 236 L 408 236" stroke="#C3CCD9" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- ══════════ GEN VI — ULTRASONIC ══════════ -->
+  <g>
+    <rect x="430" y="100" width="340" height="272" rx="12" fill="#FFFFFF" stroke="#E3E8EF"/>
+    <rect x="430" y="100" width="340" height="5" rx="2.5" fill="#3C87C8"/>
+
+    <!-- ultrasonic cone icon -->
+    <g transform="translate(462,140)">
+      <rect x="0" y="10" width="13" height="17" rx="2.5" fill="#3C87C8"/>
+      <path d="M17 18 L 42 2 L 42 34 Z" fill="#3C87C8" opacity="0.22"/>
+      <path d="M17 18 L 42 2 M17 18 L 42 34" stroke="#3C87C8" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    </g>
+
+    <text x="518" y="152" font-size="13" font-weight="700" fill="#3C87C8" letter-spacing="1.2">GENERATION VI</text>
+    <text x="518" y="176" font-size="21" font-weight="700" fill="#12161F">Ultrasonic</text>
+
+    <text x="462" y="215" font-size="13" fill="#5A6678">Sensor</text>
+    <text x="590" y="215" font-size="13" font-weight="600" fill="#12161F">HC-SR04</text>
+    <text x="462" y="240" font-size="13" fill="#5A6678">Sketches</text>
+    <text x="590" y="240" font-size="13" font-weight="600" fill="#12161F">3</text>
+    <text x="462" y="265" font-size="13" fill="#5A6678">Gained</text>
+    <text x="590" y="265" font-size="13" font-weight="600" fill="#12161F">Median filter, watchdog</text>
+
+    <line x1="462" y1="286" x2="738" y2="286" stroke="#EDF1F6"/>
+    <text x="462" y="310" font-size="12" font-weight="700" fill="#9AA5B5">WHY IT ENDED</text>
+    <text x="462" y="332" font-size="13" fill="#3E4959">Real distance at last — but a ~15° beam</text>
+    <text x="462" y="352" font-size="13" fill="#3E4959">is far too narrow to cover a bowl.</text>
+  </g>
+
+  <path d="M782 236 L 798 236" stroke="#C3CCD9" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- ══════════ GEN X — LASER ══════════ -->
+  <g>
+    <rect x="820" y="100" width="340" height="272" rx="12" fill="#FFFFFF" stroke="#6E56CF" stroke-width="1.6"/>
+    <rect x="820" y="100" width="340" height="5" rx="2.5" fill="#6E56CF"/>
+
+    <!-- dual laser beams icon -->
+    <g transform="translate(852,140)">
+      <rect x="0" y="4" width="11" height="11" rx="2" fill="#6E56CF"/>
+      <rect x="0" y="21" width="11" height="11" rx="2" fill="#6E56CF"/>
+      <path d="M15 9.5 L 44 9.5 M15 26.5 L 44 26.5" stroke="#6E56CF" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="46" cy="9.5" r="3" fill="#6E56CF"/>
+      <circle cx="46" cy="26.5" r="3" fill="#6E56CF"/>
+    </g>
+
+    <text x="908" y="152" font-size="13" font-weight="700" fill="#6E56CF" letter-spacing="1.2">GENERATION X</text>
+    <text x="908" y="176" font-size="21" font-weight="700" fill="#12161F">Laser time-of-flight</text>
+
+    <text x="852" y="215" font-size="13" fill="#5A6678">Sensor</text>
+    <text x="980" y="215" font-size="13" font-weight="600" fill="#12161F">2× VL53L0X</text>
+    <text x="852" y="240" font-size="13" fill="#5A6678">Sketches</text>
+    <text x="980" y="240" font-size="13" font-weight="600" fill="#12161F">36</text>
+    <text x="852" y="265" font-size="13" fill="#5A6678">Adds</text>
+    <text x="980" y="265" font-size="13" font-weight="600" fill="#12161F">OLED · web app · schedule</text>
+
+    <line x1="852" y1="286" x2="1128" y2="286" stroke="#EDF1F6"/>
+    <text x="852" y="310" font-size="12" font-weight="700" fill="#2DA44E">CURRENT — X V2.4</text>
+    <text x="852" y="332" font-size="13" fill="#3E4959">Two narrow, fast, precise beams. Millimetre</text>
+    <text x="852" y="352" font-size="13" fill="#3E4959">accuracy, no dependency on body heat.</text>
+  </g>
+
+  <text x="600" y="404" text-anchor="middle" font-size="12.5" fill="#8B96A6">57 sketches · every dead end preserved · ESP32-DevKitC throughout</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#C3CCD9"/>
+    </marker>
+  </defs>
+</svg>

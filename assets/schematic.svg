@@ -1,0 +1,309 @@
+<svg width="1600" height="1360" viewBox="0 0 1600 1360" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+
+<rect x="0" y="0" width="1600" height="1320" fill="#ffffff"/>
+
+<text x="30" y="34" font-size="22" font-weight="bold" fill="#111">PooKooli Fountain — Complete Wiring Schematic (v4)</text>
+<text x="30" y="54" font-size="12" fill="#555">ESP32-DevKitC (WROOM-32D) · dual VL53L0X (XSHUT) · water level · pump via MOSFET module · touch module · 0.96" OLED</text>
+
+<!-- ═══════════════ LEGEND (clear zone, no wires pass here) ═══════════════ -->
+<g>
+  <rect x="1380" y="20" width="200" height="250" fill="#fafafa" stroke="#999" stroke-width="1" rx="6"/>
+  <text x="1393" y="40" font-size="13" font-weight="bold" fill="#111">Legend</text>
+  <line x1="1393" y1="55" x2="1420" y2="55" stroke="#d32f2f" stroke-width="2.5"/><text x="1426" y="59" font-size="10" fill="#333">5V power</text>
+  <line x1="1393" y1="72" x2="1420" y2="72" stroke="#111" stroke-width="2.5"/><text x="1426" y="76" font-size="10" fill="#333">GND</text>
+  <line x1="1393" y1="89" x2="1420" y2="89" stroke="#f57c00" stroke-width="2.5"/><text x="1426" y="93" font-size="10" fill="#333">3.3V</text>
+  <line x1="1393" y1="106" x2="1420" y2="106" stroke="#1565c0" stroke-width="2"/><text x="1426" y="110" font-size="10" fill="#333">I2C SDA</text>
+  <line x1="1393" y1="123" x2="1420" y2="123" stroke="#2e7d32" stroke-width="2"/><text x="1426" y="127" font-size="10" fill="#333">I2C SCL</text>
+  <line x1="1393" y1="140" x2="1420" y2="140" stroke="#6a1b9a" stroke-width="2"/><text x="1426" y="144" font-size="10" fill="#333">GPIO / XSHUT</text>
+  <line x1="1393" y1="157" x2="1420" y2="157" stroke="#00838f" stroke-width="2"/><text x="1426" y="161" font-size="10" fill="#333">Analog / switched</text>
+  <circle cx="1400" cy="180" r="3.5" fill="#111"/><text x="1412" y="184" font-size="10" font-weight="bold" fill="#333">dot = CONNECTED</text>
+  <line x1="1393" y1="202" x2="1412" y2="202" stroke="#111" stroke-width="1.5"/>
+  <line x1="1402" y1="193" x2="1402" y2="211" stroke="#d32f2f" stroke-width="1.5"/>
+  <text x="1420" y="206" font-size="10" fill="#333">crossing, no dot =</text>
+  <text x="1420" y="218" font-size="10" fill="#333">NOT connected</text>
+  <line x1="1393" y1="236" x2="1420" y2="236" stroke="#333" stroke-width="2.5"/><text x="1426" y="240" font-size="10" fill="#333">straight plate = +</text>
+  <path d="M 1393 252 Q 1406 245 1420 252" fill="none" stroke="#333" stroke-width="1.5"/><text x="1426" y="256" font-size="10" fill="#333">curved plate = −</text>
+</g>
+
+<!-- ═══════════════ POWER SUPPLY + RAILS ═══════════════ -->
+<rect x="30" y="90" width="130" height="70" fill="#ffebee" stroke="#d32f2f" stroke-width="1.5" rx="6"/>
+<text x="95" y="118" font-size="12" font-weight="bold" fill="#b71c1c" text-anchor="middle">5V 3A</text>
+<text x="95" y="134" font-size="12" font-weight="bold" fill="#b71c1c" text-anchor="middle">Adapter</text>
+<text x="95" y="150" font-size="9" fill="#777" text-anchor="middle">single shared supply</text>
+
+<line x1="160" y1="105" x2="1360" y2="105" stroke="#d32f2f" stroke-width="2.5"/>
+<text x="1310" y="99" font-size="10" font-weight="bold" fill="#b71c1c">5V RAIL</text>
+<line x1="160" y1="145" x2="1360" y2="145" stroke="#111" stroke-width="2.5"/>
+<text x="1305" y="160" font-size="10" font-weight="bold" fill="#111">GND RAIL</text>
+<line x1="170" y1="185" x2="1360" y2="185" stroke="#f57c00" stroke-width="2.5"/>
+<text x="1178" y="200" font-size="10" font-weight="bold" fill="#e65100">3.3V RAIL</text>
+
+<line x1="150" y1="112" x2="160" y2="105" stroke="#d32f2f" stroke-width="2"/>
+<line x1="150" y1="140" x2="160" y2="145" stroke="#111" stroke-width="2"/>
+
+<!-- ═══════════════ C2 100nF — directly ACROSS GND and 3.3V rails ═══════════════ -->
+<g>
+  <line x1="240" y1="145" x2="240" y2="153" stroke="#111" stroke-width="1.5"/>
+  <circle cx="240" cy="145" r="3.5" fill="#111"/>
+  <path d="M 222 160 Q 240 150 258 160" fill="none" stroke="#333" stroke-width="1.8"/>
+  <text x="214" y="162" font-size="12" fill="#333" text-anchor="end">−</text>
+  <line x1="222" y1="172" x2="258" y2="172" stroke="#333" stroke-width="2.5"/>
+  <text x="214" y="178" font-size="13" fill="#333" text-anchor="end">+</text>
+  <line x1="240" y1="172" x2="240" y2="185" stroke="#f57c00" stroke-width="1.5"/>
+  <circle cx="240" cy="185" r="3.5" fill="#f57c00"/>
+  <text x="266" y="160" font-size="9" font-weight="bold" fill="#333">C2 100nF ceramic</text>
+  <text x="266" y="172" font-size="8" fill="#777">no real polarity — just shows</text>
+  <text x="266" y="182" font-size="8" fill="#777">which side goes to which rail</text>
+</g>
+
+<!-- ═══════════════ C1 1000µF — directly ACROSS 5V and GND rails ═══════════════ -->
+<g>
+  <line x1="1150" y1="105" x2="1150" y2="118" stroke="#d32f2f" stroke-width="1.5"/>
+  <circle cx="1150" cy="105" r="3.5" fill="#d32f2f"/>
+  <line x1="1128" y1="118" x2="1172" y2="118" stroke="#333" stroke-width="2.5"/>
+  <text x="1122" y="123" font-size="13" fill="#333" text-anchor="end">+</text>
+  <path d="M 1128 132 Q 1150 142 1172 132" fill="none" stroke="#333" stroke-width="1.8"/>
+  <text x="1122" y="140" font-size="12" fill="#333" text-anchor="end">−</text>
+  <line x1="1150" y1="137" x2="1150" y2="145" stroke="#111" stroke-width="1.5"/>
+  <circle cx="1150" cy="145" r="3.5" fill="#111"/>
+  <text x="1075" y="98" font-size="9" font-weight="bold" fill="#333">C1 1000µF electrolytic (polarized!)</text>
+  <text x="1075" y="170" font-size="8" fill="#777">+ leg to 5V rail, − leg to GND · place near MOSFET module input</text>
+</g>
+
+<!-- ═══════════════ ESP32 BOARD ═══════════════ -->
+<rect x="220" y="250" width="220" height="480" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="8"/>
+<text x="330" y="275" font-size="14" font-weight="bold" fill="#1b5e20" text-anchor="middle">ESP32-DevKitC</text>
+<text x="330" y="291" font-size="10" fill="#555" text-anchor="middle">(WROOM-32D)</text>
+
+<!-- LEFT pins -->
+<line x1="220" y1="330" x2="180" y2="330" stroke="#f57c00" stroke-width="2"/>
+<line x1="180" y1="330" x2="180" y2="185" stroke="#f57c00" stroke-width="2"/>
+<circle cx="180" cy="185" r="3.5" fill="#f57c00"/>
+<text x="230" y="326" font-size="9" fill="#e65100">3.3V out</text>
+
+<line x1="220" y1="360" x2="200" y2="360" stroke="#111" stroke-width="2"/>
+<line x1="200" y1="360" x2="200" y2="145" stroke="#111" stroke-width="2"/>
+<circle cx="200" cy="145" r="3.5" fill="#111"/>
+<text x="230" y="356" font-size="9" fill="#111">GND</text>
+
+<line x1="220" y1="400" x2="145" y2="400" stroke="#1565c0" stroke-width="2"/>
+<line x1="145" y1="400" x2="145" y2="220" stroke="#1565c0" stroke-width="2"/>
+<text x="230" y="396" font-size="9" fill="#1565c0">GPIO21 SDA</text>
+
+<line x1="220" y1="430" x2="125" y2="430" stroke="#2e7d32" stroke-width="2"/>
+<line x1="125" y1="430" x2="125" y2="240" stroke="#2e7d32" stroke-width="2"/>
+<text x="230" y="426" font-size="9" fill="#2e7d32">GPIO22 SCL</text>
+
+<!-- I2C horizontal buses -->
+<line x1="145" y1="220" x2="975" y2="220" stroke="#1565c0" stroke-width="2"/>
+<line x1="125" y1="240" x2="990" y2="240" stroke="#2e7d32" stroke-width="2"/>
+
+<!-- RIGHT pins -->
+<line x1="440" y1="330" x2="470" y2="330" stroke="#d32f2f" stroke-width="2"/>
+<line x1="470" y1="330" x2="470" y2="105" stroke="#d32f2f" stroke-width="2"/>
+<circle cx="470" cy="105" r="3.5" fill="#d32f2f"/>
+<text x="380" y="326" font-size="9" fill="#b71c1c" text-anchor="end">5V/VIN</text>
+
+<line x1="440" y1="360" x2="495" y2="360" stroke="#111" stroke-width="2"/>
+<line x1="495" y1="360" x2="495" y2="145" stroke="#111" stroke-width="2"/>
+<circle cx="495" cy="145" r="3.5" fill="#111"/>
+<text x="380" y="356" font-size="9" fill="#111" text-anchor="end">GND</text>
+
+<line x1="440" y1="470" x2="750" y2="470" stroke="#6a1b9a" stroke-width="1.5"/>
+<text x="380" y="466" font-size="9" fill="#6a1b9a" text-anchor="end">GPIO32 XSHUT1</text>
+
+<line x1="440" y1="500" x2="725" y2="500" stroke="#6a1b9a" stroke-width="1.5"/>
+<line x1="725" y1="500" x2="725" y2="596" stroke="#6a1b9a" stroke-width="1.5"/>
+<line x1="725" y1="596" x2="750" y2="596" stroke="#6a1b9a" stroke-width="1.5"/>
+<text x="380" y="496" font-size="9" fill="#6a1b9a" text-anchor="end">GPIO33 XSHUT2</text>
+
+<!-- GPIO26 -> R1 -> gate -->
+<line x1="440" y1="560" x2="455" y2="560" stroke="#00838f" stroke-width="1.5"/>
+<path d="M 455 560 L 460 560 L 464 552 L 472 568 L 480 552 L 488 568 L 496 552 L 504 568 L 510 560 L 520 560" fill="none" stroke="#00838f" stroke-width="1.5"/>
+<line x1="520" y1="560" x2="640" y2="560" stroke="#00838f" stroke-width="1.5"/>
+<line x1="640" y1="560" x2="640" y2="800" stroke="#00838f" stroke-width="1.5"/>
+<text x="380" y="556" font-size="9" fill="#00838f" text-anchor="end">GPIO26 pump</text>
+<text x="452" y="585" font-size="9" font-weight="bold" fill="#00838f">R1 100–220Ω</text>
+
+<!-- GPIO13 -> touch SIG -->
+<line x1="440" y1="620" x2="930" y2="620" stroke="#6a1b9a" stroke-width="1.5"/>
+<path d="M 930 620 L 936 620 L 940 612 L 948 628 L 956 612 L 964 628 L 972 612 L 980 628 L 988 620 L 995 620" fill="none" stroke="#6a1b9a" stroke-width="1.5"/>
+<line x1="995" y1="620" x2="1200" y2="620" stroke="#6a1b9a" stroke-width="1.5"/>
+<text x="928" y="645" font-size="9" font-weight="bold" fill="#6a1b9a">R3 1kΩ (optional)</text>
+<!-- C4: optional RC filter cap, on the GPIO13 side of R3, to control GND -->
+<circle cx="820" cy="620" r="3.5" fill="#6a1b9a"/>
+<line x1="820" y1="620" x2="820" y2="700" stroke="#111" stroke-width="1.5"/>
+<line x1="810" y1="700" x2="830" y2="700" stroke="#333" stroke-width="2.5"/>
+<path d="M 810 714 Q 820 722 830 714" fill="none" stroke="#333" stroke-width="1.8"/>
+<line x1="820" y1="717" x2="820" y2="760" stroke="#111" stroke-width="1.5"/>
+<line x1="820" y1="760" x2="700" y2="760" stroke="#111" stroke-width="1.5"/>
+<circle cx="700" cy="760" r="3.5" fill="#111"/>
+<text x="832" y="700" font-size="9" font-weight="bold" fill="#333">C4 100nF (optional)</text>
+<text x="832" y="712" font-size="8" fill="#777">RC filter with R3 — add only</text>
+<text x="832" y="722" font-size="8" fill="#777">if phantom touches appear</text>
+<line x1="1200" y1="620" x2="1200" y2="800" stroke="#6a1b9a" stroke-width="1.5"/>
+<text x="380" y="616" font-size="9" fill="#6a1b9a" text-anchor="end">GPIO13 touch</text>
+
+<!-- GPIO34 -> water S -->
+<line x1="440" y1="680" x2="1000" y2="680" stroke="#00838f" stroke-width="1.5"/>
+<text x="380" y="676" font-size="9" fill="#00838f" text-anchor="end">GPIO34 water</text>
+
+<!-- ═══════════════ R2 gate pulldown ═══════════════ -->
+<circle cx="640" cy="720" r="3.5" fill="#00838f"/>
+<path d="M 640 720 L 646 720 L 650 712 L 658 728 L 666 712 L 674 728 L 682 712 L 688 720 L 700 720" fill="none" stroke="#111" stroke-width="1.5"/>
+<circle cx="700" cy="720" r="3.5" fill="#111"/>
+<text x="642" y="708" font-size="9" font-weight="bold" fill="#111">R2 10kΩ</text>
+<text x="642" y="742" font-size="8" fill="#777">gate pulldown — stops pump</text>
+<text x="642" y="752" font-size="8" fill="#777">glitch during ESP32 boot</text>
+
+<!-- Module control GND lane: GND rail down to module GND pin (R2 taps in at 720) -->
+<line x1="700" y1="145" x2="700" y2="800" stroke="#111" stroke-width="1.5"/>
+<circle cx="700" cy="145" r="3.5" fill="#111"/>
+
+<!-- ═══════════════ I2C DEVICE STACK ═══════════════ -->
+<!-- vertical bus taps on the right of the stack -->
+<line x1="945" y1="185" x2="945" y2="548" stroke="#f57c00" stroke-width="1.5"/>
+<circle cx="945" cy="185" r="3.5" fill="#f57c00"/>
+<line x1="960" y1="145" x2="960" y2="562" stroke="#111" stroke-width="1.5"/>
+<circle cx="960" cy="145" r="3.5" fill="#111"/>
+<line x1="975" y1="220" x2="975" y2="576" stroke="#1565c0" stroke-width="1.5"/>
+<circle cx="975" cy="220" r="3.5" fill="#1565c0"/>
+<line x1="990" y1="240" x2="990" y2="590" stroke="#2e7d32" stroke-width="1.5"/>
+<circle cx="990" cy="240" r="3.5" fill="#2e7d32"/>
+
+<!-- OLED -->
+<rect x="750" y="260" width="170" height="90" fill="#ede7f6" stroke="#5e35b1" stroke-width="1.5" rx="6"/>
+<text x="835" y="282" font-size="12" font-weight="bold" fill="#4527a0" text-anchor="middle">OLED 0.96" SSD1306</text>
+<text x="835" y="296" font-size="9" fill="#666" text-anchor="middle">I2C addr 0x3C</text>
+<text x="912" y="299" font-size="8" fill="#333" text-anchor="end">VCC</text>
+<text x="912" y="313" font-size="8" fill="#333" text-anchor="end">GND</text>
+<text x="912" y="327" font-size="8" fill="#333" text-anchor="end">SDA</text>
+<text x="912" y="341" font-size="8" fill="#333" text-anchor="end">SCL</text>
+<line x1="920" y1="296" x2="945" y2="296" stroke="#f57c00" stroke-width="1.5"/><circle cx="945" cy="296" r="3" fill="#f57c00"/>
+<line x1="920" y1="310" x2="960" y2="310" stroke="#111" stroke-width="1.5"/><circle cx="960" cy="310" r="3" fill="#111"/>
+<line x1="920" y1="324" x2="975" y2="324" stroke="#1565c0" stroke-width="1.5"/><circle cx="975" cy="324" r="3" fill="#1565c0"/>
+<line x1="920" y1="338" x2="990" y2="338" stroke="#2e7d32" stroke-width="1.5"/><circle cx="990" cy="338" r="3" fill="#2e7d32"/>
+
+<!-- VL53L0X #1 -->
+<rect x="750" y="380" width="170" height="100" fill="#e1f5fe" stroke="#0277bd" stroke-width="1.5" rx="6"/>
+<text x="835" y="402" font-size="12" font-weight="bold" fill="#01579b" text-anchor="middle">VL53L0X sensor #1</text>
+<text x="835" y="416" font-size="9" fill="#666" text-anchor="middle">boot-reassigned to 0x30</text>
+<text x="912" y="423" font-size="8" fill="#333" text-anchor="end">VCC</text>
+<text x="912" y="437" font-size="8" fill="#333" text-anchor="end">GND</text>
+<text x="912" y="451" font-size="8" fill="#333" text-anchor="end">SDA</text>
+<text x="912" y="465" font-size="8" fill="#333" text-anchor="end">SCL</text>
+<text x="758" y="473" font-size="8" fill="#6a1b9a">XSHUT</text>
+<line x1="920" y1="420" x2="945" y2="420" stroke="#f57c00" stroke-width="1.5"/><circle cx="945" cy="420" r="3" fill="#f57c00"/>
+<line x1="920" y1="434" x2="960" y2="434" stroke="#111" stroke-width="1.5"/><circle cx="960" cy="434" r="3" fill="#111"/>
+<line x1="920" y1="448" x2="975" y2="448" stroke="#1565c0" stroke-width="1.5"/><circle cx="975" cy="448" r="3" fill="#1565c0"/>
+<line x1="920" y1="462" x2="990" y2="462" stroke="#2e7d32" stroke-width="1.5"/><circle cx="990" cy="462" r="3" fill="#2e7d32"/>
+
+<!-- VL53L0X #2 -->
+<rect x="750" y="510" width="170" height="100" fill="#e1f5fe" stroke="#0277bd" stroke-width="1.5" rx="6"/>
+<text x="835" y="532" font-size="12" font-weight="bold" fill="#01579b" text-anchor="middle">VL53L0X sensor #2</text>
+<text x="835" y="546" font-size="9" fill="#666" text-anchor="middle">stays at default 0x29</text>
+<text x="912" y="551" font-size="8" fill="#333" text-anchor="end">VCC</text>
+<text x="912" y="565" font-size="8" fill="#333" text-anchor="end">GND</text>
+<text x="912" y="579" font-size="8" fill="#333" text-anchor="end">SDA</text>
+<text x="912" y="593" font-size="8" fill="#333" text-anchor="end">SCL</text>
+<text x="758" y="599" font-size="8" fill="#6a1b9a">XSHUT</text>
+<line x1="920" y1="548" x2="945" y2="548" stroke="#f57c00" stroke-width="1.5"/><circle cx="945" cy="548" r="3" fill="#f57c00"/>
+<line x1="920" y1="562" x2="960" y2="562" stroke="#111" stroke-width="1.5"/><circle cx="960" cy="562" r="3" fill="#111"/>
+<line x1="920" y1="576" x2="975" y2="576" stroke="#1565c0" stroke-width="1.5"/><circle cx="975" cy="576" r="3" fill="#1565c0"/>
+<line x1="920" y1="590" x2="990" y2="590" stroke="#2e7d32" stroke-width="1.5"/><circle cx="990" cy="590" r="3" fill="#2e7d32"/>
+
+<!-- ═══════════════ WATER LEVEL SENSOR ═══════════════ -->
+<rect x="1000" y="630" width="170" height="100" fill="#e0f7fa" stroke="#00838f" stroke-width="1.5" rx="6"/>
+<text x="1024" y="647" font-size="9" fill="#333">+</text>
+<text x="1051" y="647" font-size="9" fill="#333">−</text>
+<text x="1008" y="676" font-size="8" fill="#00838f">S (signal)</text>
+<text x="1085" y="700" font-size="12" font-weight="bold" fill="#006064" text-anchor="middle">Water level sensor</text>
+<text x="1085" y="715" font-size="9" fill="#666" text-anchor="middle">analog comb type</text>
+<line x1="1030" y1="630" x2="1030" y2="185" stroke="#f57c00" stroke-width="1.5"/>
+<circle cx="1030" cy="185" r="3.5" fill="#f57c00"/>
+<line x1="1055" y1="630" x2="1055" y2="145" stroke="#111" stroke-width="1.5"/>
+<circle cx="1055" cy="145" r="3.5" fill="#111"/>
+
+<!-- ═══════════════ TOUCH SENSOR MODULE (3-pin) ═══════════════ -->
+<rect x="1180" y="800" width="180" height="115" fill="#fff3e0" stroke="#ef6c00" stroke-width="1.5" rx="6"/>
+<text x="1196" y="820" font-size="8" fill="#6a1b9a">SIG</text>
+<text x="1244" y="820" font-size="8" fill="#333">GND</text>
+<text x="1294" y="820" font-size="8" fill="#333">VCC</text>
+<text x="1270" y="850" font-size="12" font-weight="bold" fill="#e65100" text-anchor="middle">Touch sensor module</text>
+<text x="1270" y="865" font-size="9" fill="#666" text-anchor="middle">capacitive, 3-pin (TTP223-style)</text>
+<text x="1270" y="895" font-size="9" fill="#333" text-anchor="middle">output goes HIGH on touch</text>
+<line x1="1250" y1="800" x2="1250" y2="145" stroke="#111" stroke-width="1.5"/>
+<circle cx="1250" cy="145" r="3.5" fill="#111"/>
+<line x1="1300" y1="800" x2="1300" y2="185" stroke="#f57c00" stroke-width="1.5"/>
+<!-- C3: 100nF across touch module VCC/GND, right at the module -->
+<circle cx="1250" cy="770" r="3.5" fill="#111"/>
+<line x1="1250" y1="770" x2="1258" y2="770" stroke="#111" stroke-width="1.5"/>
+<path d="M 1262 758 Q 1254 770 1262 782" fill="none" stroke="#333" stroke-width="1.8"/>
+<line x1="1276" y1="758" x2="1276" y2="782" stroke="#333" stroke-width="2.5"/>
+<line x1="1278" y1="770" x2="1300" y2="770" stroke="#f57c00" stroke-width="1.5"/>
+<circle cx="1300" cy="770" r="3.5" fill="#f57c00"/>
+<text x="1310" y="766" font-size="9" font-weight="bold" fill="#333">C3 100nF — VCC filter</text>
+<text x="1310" y="778" font-size="8" fill="#777">solder right at module pins</text>
+<circle cx="1300" cy="185" r="3.5" fill="#f57c00"/>
+
+<!-- ═══════════════ MOSFET MODULE ═══════════════ -->
+<rect x="600" y="800" width="230" height="140" fill="#fce4ec" stroke="#ad1457" stroke-width="1.5" rx="6"/>
+<text x="715" y="775" font-size="12" font-weight="bold" fill="#880e4f">MOSFET driver module</text>
+<text x="644" y="820" font-size="8" fill="#00838f">SIG</text>
+<text x="692" y="820" font-size="8" fill="#333">GND</text>
+<text x="608" y="843" font-size="8" fill="#333">VIN+ (5V in)</text>
+<text x="608" y="903" font-size="8" fill="#333">VIN− (GND in)</text>
+<text x="822" y="843" font-size="8" fill="#333" text-anchor="end">OUT+</text>
+<text x="822" y="903" font-size="8" fill="#333" text-anchor="end">OUT−</text>
+<text x="715" y="872" font-size="9" fill="#880e4f" text-anchor="middle">VIN+ → OUT+ passes straight through;</text>
+<text x="715" y="885" font-size="9" fill="#880e4f" text-anchor="middle">MOSFET switches OUT− when SIG is HIGH</text>
+
+<!-- module power input from rails -->
+<line x1="600" y1="840" x2="560" y2="840" stroke="#d32f2f" stroke-width="2"/>
+<line x1="560" y1="840" x2="560" y2="105" stroke="#d32f2f" stroke-width="2"/>
+<circle cx="560" cy="105" r="3.5" fill="#d32f2f"/>
+<line x1="600" y1="900" x2="530" y2="900" stroke="#111" stroke-width="2"/>
+<line x1="530" y1="900" x2="530" y2="145" stroke="#111" stroke-width="2"/>
+<circle cx="530" cy="145" r="3.5" fill="#111"/>
+
+<!-- ═══════════════ PUMP — exactly TWO wires, both from module OUT ═══════════════ -->
+<line x1="830" y1="840" x2="950" y2="840" stroke="#d32f2f" stroke-width="2"/>
+<line x1="830" y1="900" x2="950" y2="900" stroke="#00838f" stroke-width="2"/>
+
+<!-- D1 flyback across the two pump wires -->
+<circle cx="890" cy="840" r="3.5" fill="#d32f2f"/>
+<circle cx="890" cy="900" r="3.5" fill="#00838f"/>
+<line x1="890" y1="840" x2="890" y2="856" stroke="#111" stroke-width="1.5"/>
+<line x1="880" y1="856" x2="900" y2="856" stroke="#111" stroke-width="2.5"/>
+<polygon points="880,878 900,878 890,858" fill="none" stroke="#111" stroke-width="1.5"/>
+<line x1="890" y1="878" x2="890" y2="900" stroke="#111" stroke-width="1.5"/>
+<text x="905" y="862" font-size="9" font-weight="bold" fill="#333">D1 1N4007</text>
+<text x="905" y="874" font-size="8" fill="#777">cathode (bar) to +</text>
+
+<rect x="950" y="800" width="170" height="140" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5" rx="6"/>
+<text x="958" y="843" font-size="9" fill="#333">+</text>
+<text x="958" y="903" font-size="9" fill="#333">−</text>
+<text x="1035" y="862" font-size="12" font-weight="bold" fill="#0d47a1" text-anchor="middle">5V water pump</text>
+<text x="1035" y="877" font-size="9" fill="#666" text-anchor="middle">submersible</text>
+<text x="1035" y="925" font-size="9" font-weight="bold" fill="#0d47a1" text-anchor="middle">2 wires ONLY — both from</text>
+<text x="1035" y="936" font-size="9" font-weight="bold" fill="#0d47a1" text-anchor="middle">MOSFET module OUT+/OUT−</text>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<rect x="30" y="985" width="1550" height="345" fill="#f5f5f5" stroke="#999" stroke-width="1" rx="6"/>
+<text x="46" y="1010" font-size="13" font-weight="bold" fill="#111">Build notes</text>
+<text x="46" y="1034" font-size="11" fill="#333">1. PUMP WIRING: the pump connects to exactly TWO wires — the MOSFET module's OUT+ and OUT− terminals. Nothing from the adapter touches the pump directly.</text>
+<text x="46" y="1052" font-size="11" fill="#333">    The adapter feeds only the module's INPUT terminals (VIN+ / VIN−). Inside the module, VIN+ passes straight through to OUT+, and the MOSFET connects OUT− to VIN− when SIG is HIGH.</text>
+<text x="46" y="1076" font-size="11" fill="#333">2. CAPACITORS: C1 (1000µF electrolytic, POLARIZED) sits directly across the 5V and GND rails — + leg to 5V, − leg to GND, physically near the module input. Installing it backwards can make it vent/fail.</text>
+<text x="46" y="1094" font-size="11" fill="#333">    C2 (100nF ceramic) sits directly across the 3.3V and GND rails near the ESP32. Ceramic caps have no real polarity; the +/− marks only show which leg goes to which rail.</text>
+<text x="46" y="1118" font-size="11" fill="#333">3. CONNECTION CONVENTION: a filled dot = wires are electrically connected. Lines that cross WITHOUT a dot are NOT connected — they just pass each other on the drawing.</text>
+<text x="46" y="1142" font-size="11" fill="#333">4. D1 (1N4007) sits directly across the pump's two wires, cathode (banded end) toward OUT+. It absorbs the motor's inductive kickback when the MOSFET switches off.</text>
+<text x="46" y="1166" font-size="11" fill="#333">5. R1 (100–220Ω) in series between GPIO26 and the module's SIG pin. R2 (10kΩ) from the SIG line down to GND — holds the gate LOW while the ESP32 boots so the pump can't glitch on.</text>
+<text x="46" y="1190" font-size="11" fill="#333">6. I2C: all three devices (OLED 0x3C, sensor #1 0x30, sensor #2 0x29) share SDA=GPIO21 / SCL=GPIO22 at 100kHz (do NOT raise to 400kHz — verified unreliable with this wiring).</text>
+<text x="46" y="1214" font-size="11" fill="#333">7. XSHUT boot sequence (firmware handles this): hold both XSHUT lines LOW → raise XSHUT1 (GPIO32) and reassign sensor #1 to 0x30 → raise XSHUT2 (GPIO33), sensor #2 keeps 0x29.</text>
+<text x="46" y="1238" font-size="11" fill="#333">8. Touch module output is active-HIGH (HIGH = touched). Current minimal firmware has no touch code yet — when the module is added back, firmware must read HIGH as touched (no pull-up needed).</text>
+<text x="46" y="1262" font-size="11" fill="#333">9. Before connecting any sensor: measure the 3.3V rail with a multimeter. It must read close to 3.3V and NEVER above 3.6V — an out-of-spec rail (3.7V) already killed one VL53L0X in this project.</text>
+<text x="46" y="1286" font-size="11" fill="#333">10. Every wire in this drawing is a solid continuous line traced from source to destination. No dashed lines exist anywhere on this schematic.</text>
+<text x="46" y="1310" font-size="11" fill="#333">11. TOUCH NOISE CONTROL: C3 (100nF ceramic) across the touch module's VCC/GND pins filters pump-PWM ripple from its supply — the touch IC false-triggers on noisy power. R3 (1kΩ series in the</text>
+<text x="46" y="1326" font-size="11" fill="#333">      SIG line) + C4 (100nF from SIG to GND) form an OPTIONAL RC filter — build without them first; add only if phantom touches appear. Physically place R3+C4 near the ESP32 end of the wire.</text>
+
+</svg>
