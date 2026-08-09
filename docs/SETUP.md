@@ -19,6 +19,7 @@ How to get the PooKooli Fountain running from a fresh clone.
 | Display | 0.96" SSD1306 OLED, I²C | Address `0x3C` |
 | Touch | Capacitive touch module | Active-HIGH, driven output |
 | Pump | 5 V/12 V DC submersible pump | Match your supply |
+| BLE remote *(optional)* | Any generic "iTag" anti-lost keyfob | No wiring — pairs over Bluetooth |
 
 **Software**
 - [Arduino IDE](https://www.arduino.cc/en/software) 2.x
@@ -27,6 +28,7 @@ How to get the PooKooli Fountain running from a fresh clone.
   - `Adafruit VL53L0X` (pulls in `Adafruit BusIO`)
   - `Adafruit SSD1306`
   - `Adafruit GFX`
+  - `NimBLE-Arduino` (by h2zero) — only needed for the BLE remote, V2.5+
 
 ---
 
@@ -57,7 +59,8 @@ brown out or crash the board. See [HARDWARE.md](HARDWARE.md) before powering on.
 
 | I want to… | Open |
 |---|---|
-| Just run the fountain | `stable/V35AlfaX-V2.4-Debug-LatestAllDoneFirstAllOk/` |
+| Just run the fountain | `stable/V43AlfaX-V2.7-Debug-WaterLevelFix/` |
+| Run it without the BLE remote / on the older, more-tested base | `stable/V35AlfaX-V2.4-Debug-LatestAllDoneFirstAllOk/` |
 | Check one module in isolation | `3-laser/ModuleTest/` |
 | Follow the build-up module by module | `3-laser/Beta/` |
 | See the earlier hardware generations | `1-infrared/`, `2-ultrasonic/` |
@@ -117,7 +120,7 @@ and trigger times depend on it.
 3. You should see a boot report like:
 
 ```
-=== PooKooli Fountain X V2.4 ===
+=== PooKooli Fountain X V2.7 ===
 [Boot] Reason: Power-on | Free heap: 271000 bytes | Was at: power-on
 [WDT] Armed 10s
 [VL53L0X] Sensor #1 OK at 0x30 (20ms timing budget)
@@ -132,7 +135,11 @@ and trigger times depend on it.
 Connecting to YourNetwork....
 ✓ http://192.168.1.42
 [Web] Server ready
+[BLE] Scanning for iTag remote...
 ```
+
+No iTag paired? `[BLE]` lines simply keep retrying every 5 s in the background — everything
+else works normally without one.
 
 4. Open that IP in a browser. On a phone, use **Add to Home Screen** for the PWA icon.
 
@@ -140,17 +147,19 @@ Connecting to YourNetwork....
 
 ## 7. Calibrate the water sensor
 
-Defaults are placeholders — your sensor will read differently:
+Defaults are placeholders — your sensor will read differently. As of `stable/` V2.7 they are
+even marked **INTERIM** in the sketch itself (back-calculated estimates, not measured on a
+real sensor):
 
 ```cpp
-#define WATER_ADC_DRY    400    // reading when completely dry
-#define WATER_ADC_FULL  3000    // reading when fully submerged
-#define WATER_LOW_PCT     20    // below this %, the pump is blocked
+#define WATER_ADC_DRY    244    // INTERIM — reading when completely dry
+#define WATER_ADC_FULL  1596    // INTERIM — reading when fully submerged
+#define WATER_LOW_PCT      5    // below this %, the pump is blocked
 ```
 
-Watch the `[Water] raw=… pct=…%` line on Serial with the sensor dry, then submerged, and
-put those two raw numbers in. Until you do, the percentage on the dashboard is not
-meaningful.
+Watch the `[Water] raw=… (median of 7) pct=…%` line on Serial with the sensor dry, then
+submerged, and put those two raw numbers in. Until you do, the percentage on the dashboard
+is not meaningful.
 
 Testing with an empty tank? Toggle **test mode** in the web app to force the level to 50 %
 so the pump will run.
@@ -168,6 +177,8 @@ so the pump will run.
 | Sensors drop out only while pumping | Motor EMI on the I²C bus — route sensor wiring away from motor leads |
 | Random reboots | Read **Device Info → Boot History** for the reset reason and crash checkpoint |
 | Schedule never fires | Clock never synced — check the Schedule page clock and `TZ_OFFSET_SEC` |
+| Tank blocked as "empty" when it isn't | Water ADC thresholds are still the **INTERIM** defaults — calibrate them (step 7) |
+| BLE remote never connects | Its advertised name/UUIDs may not match `BLE_TAG_NAME`/`BLE_SVC_UUID`/`BLE_CHR_UUID` — reflash `3-laser/ModuleTest/iTag-BLE-Test-2` to discover your exact unit's values from Serial |
 
 **The Boot History page is the single best diagnostic tool here.** It records the reset
 reason, free heap, and a crash-location breadcrumb for the last 10 boots, and it survives

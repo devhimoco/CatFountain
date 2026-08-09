@@ -22,7 +22,47 @@ This is the current generation.
 
 ## Complete editions — `3-laser/Alfa-X/`
 
-### X V2.4 — `V34-…-Debug`, `V35-…-LatestAllDoneFirstAllOk` ⭐ current
+### X V2.7 — `V43-…-WaterLevelFix` ⭐ current
+Second recalibration of the water ADC thresholds — the V2.6 numbers were themselves
+provisional. `WATER_ADC_DRY`/`WATER_ADC_FULL` are back-calculated estimates and still marked
+**INTERIM** in the sketch header; `WATER_LOW_PCT` raised `1% → 5%` for a saner cutoff margin.
+`V43` is the build promoted to [`stable/`](stable/).
+
+### X V2.6 — `V42-…-ERRDntShow`
+The water-level reading was tripping a false "tank empty" block during pump-motor inrush —
+same class of problem as the ToF sensors' own noise-rejection fix.
+
+- ADC now reads a **median of 7 samples** instead of one, rejecting a single noisy reading
+- `WATER_ADC_DRY`/`WATER_ADC_FULL`/`WATER_LOW_PCT` recalibrated
+
+### X V2.5 — `V41-…-AddBLRemoteLatest`
+**BLE iTag remote.** The ESP32 connects as a BLE *client* directly to a cheap iTag keyfob
+(the kind sold for anti-lost apps) — no phone or app required once paired in firmware.
+Protocol confirmed first in [`3-laser/ModuleTest/iTag-BLE-Test-2`](3-laser/ModuleTest/).
+
+- Targets the common clone GATT layout (service `FFE0`, notifying characteristic `FFE1`);
+  any notification counts as a press
+- Button toggles the pump **continuous** (like the web app's ON button), with the same
+  override precedence as Touch — stops any run, or starts one
+- New **Sensor Test Mode** toggle on the Debug page: quiets the repeating I²C-recovery
+  retry chain and `[Dist]` print for bench-testing with no sensors connected
+- Adds a third radio subsystem (WiFi + WebServer + now BLE central) on a board with a
+  documented watchdog-crash history — flagged in the header as worth watching
+
+### X V2.4 (re-verified) — `V36`–`V39`
+After `V35` bundled several overnight-crash fixes together, each was re-verified
+independently rather than trusted as a package: `V36` restarted from the pre-fix `V34`
+baseline, then `V37`–`V39` re-added the laser-confirm/soft-start, I²C-recovery-defer/
+soft-stop, and per-day Schedule/browser-clock fixes one at a time. `V39` lands
+**byte-identical to `V35`**, closing the re-verification.
+
+This exact build is also packaged as its own standalone repository,
+**[PooKooli-Fountain-X-V2.4](https://github.com/devhimoco/PooKooli-Fountain-X-V2.4)** — a
+quick-start README and `secrets.h.example` instead of the full archive here — which is the
+firmware actually flashed on the physical fountain as of this writing, predating the
+V2.5–V2.7 work above.
+
+### X V2.4 — `V34-…-Debug`, `V35-…-LatestAllDoneFirstAllOk`
 A full night of data came back **10/10 PANIC, every entry still reading checkpoint
 `"boot"`** — implying the crash happened in `setup()` before `loop()` ever ran. V2.3's
 breadcrumbs only covered `loop()`, so that region was genuinely invisible.
@@ -31,7 +71,7 @@ breadcrumbs only covered `loop()`, so that region was genuinely invisible.
   load, WiFi connect, NTP, web routes, watchdog config
 - Watchdog now fed during the WiFi connect wait, which can block up to 15 s and
   previously had zero resets across the whole window
-- `V35` is the build promoted to [`stable/`](stable/)
+- `V35` was the build promoted to [`stable/`](stable/), superseded by `V43` (X V2.7) above
 
 ### X V2.3 — `V33-…-RestartOverNight2`
 Reset *reason* told us when and why, never **where**. So: a crash-location breadcrumb in
@@ -95,6 +135,7 @@ Each module proven in isolation before being trusted in a build.
 | `V08-OledTest` | OLED alone, with a full I²C scan and both common addresses |
 | `V09-OledTestRecovery` | Same, plus bit-banged SCL to force-release a stuck SDA line, and a second bus on GPIO18/19 to isolate the fault |
 | `V15-RfPt2272-Test` | 433 MHz YK04 + PT2272-M4 receiver — **the test that killed the feature** |
+| `iTag-BLE-Test-2` | Standalone BLE client — discovers a real iTag's advertised name and GATT layout, the protocol `V41` (X V2.5) then wired into the fountain |
 
 ---
 

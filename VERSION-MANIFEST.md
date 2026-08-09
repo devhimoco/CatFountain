@@ -155,3 +155,60 @@ Listed in `.gitignore`, not deleted:
 `docs/SETUP.md` · `docs/HARDWARE.md` · and a README in each of
 `1-infrared/`, `2-ultrasonic/`, `3-laser/`, `3-laser/ModuleTest/`,
 `3-laser/Beta/`, `3-laser/Alfa-X/`, `stable/`.
+
+---
+
+# Addendum — new versions added (2026-08-09)
+
+Nine sketches written after the 2026-07-22 publication were folded into the archive.
+
+## New versions — `3-laser/Alfa-X/`
+
+| Folder | Version | Note |
+|---|---|---|
+| `V36Alfa-X-V2.4.1-FRestartDuring` | X V2.4.1 | Restarted from `V34`'s pre-fix baseline to re-verify V2.4's crash fixes individually |
+| `V37AlfaX-V2.4.2-FFalseTrigger` | X V2.4.2 | Laser-confirm window + pump soft-start re-added |
+| `V38AlfaX-V2.4.3-FirstTrySchedule` | X V2.4.3 | I²C-recovery pump-off guard, soft-stop, NTP-on-reconnect re-added |
+| `V39AlfaX-V2.4.4-AllFuncFix` | X V2.4 | Schedule days/once + browser-clock fallback re-added — **byte-identical to `V35`** (confirmed via `diff`) |
+| `V41AlfaX-V2.5-Debug-AddBLRemoteLatest` | X V2.5 | BLE iTag remote + Sensor Test Mode |
+| `V42AlfaX-V2.6-Debug-ERRDntShow` | X V2.6 | Water ADC median filter + recalibration |
+| `V43AlfaX-V2.7-Debug-WaterLevelFix` | X V2.7 | Water ADC recalibrated again (interim values) — **promoted to `stable/`** |
+
+Full technical detail for each is in [`CHANGELOG.md`](CHANGELOG.md).
+
+## Not included — a separate repo
+
+A folder matching `V35`/`V39` byte-for-byte (confirmed via `diff`) also exists locally at
+`3-laser/Alfa-X/PooKooli-Fountain-X-V2.4-NowOnBoard/`, but it is **not part of this repo**:
+it's its own git repository with its own remote and 12-commit history, already published at
+[github.com/devhimoco/PooKooli-Fountain-X-V2.4](https://github.com/devhimoco/PooKooli-Fountain-X-V2.4).
+Copying its files in here would have flattened that history, so it's excluded via
+`.gitignore` and cross-linked from the READMEs instead — it's the firmware actually flashed
+on the physical device.
+
+## New version — `3-laser/ModuleTest/`
+
+| Folder | Note |
+|---|---|
+| `iTag-BLE-Test-2` | Standalone BLE-client protocol discovery for the iTag remote, feeding directly into `V41` above |
+
+## Excluded — one more duplicate
+
+`V40AlfaX-V2.4-Debug-LatestAllDoneFirstAllOk` is a byte-for-byte duplicate of `V35`
+(confirmed via `diff`; its `.ino` is even still internally named after `V35`'s folder) —
+a checkpoint saved right before the V2.5 branch started. Excluded via `.gitignore`, same
+class as the nested Beta duplicates noted above.
+
+## `stable/` updated
+
+`V43AlfaX-V2.7-Debug-WaterLevelFix` was copied into `stable/` as the new recommended
+build. `V34` and `V35` remain there for history — nothing was removed.
+
+## Counts after this update
+
+| Category | Before | After |
+|---|---:|---:|
+| `3-laser/Alfa-X/` | 14 | 21 |
+| `3-laser/ModuleTest/` | 5 | 6 |
+| `3-laser/` total | 36 | 44 |
+| Repository total | 57 | 65 |

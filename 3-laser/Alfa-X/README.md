@@ -1,14 +1,16 @@
 # Alfa-X — complete editions
 
-**14 sketches · `X V1.0` → `X V2.4`**
+**21 sketches · `X V1.0` → `X V2.7`**
 
 Where the test track graduates. Every module verified individually *and* together, then
 the versioning switches:
 
 > **X Vx.y — complete edition: `+0.1` small change, `+1.0` big change.**
 
-The last four versions are not a feature run. They are a **crash investigation**, and they
-produced the most useful subsystem in the project.
+`V31`–`V39` are not a feature run. They are a **crash investigation** — first solved in
+`V35`, then independently re-verified fix-by-fix in `V36`–`V39` until the result matched
+`V35` exactly. `V41`–`V43` pick up from there with a physical remote and a water-sensor
+recalibration.
 
 ---
 
@@ -29,7 +31,21 @@ produced the most useful subsystem in the project.
 | 32 | `V32AlfaX-V2.2-Debug-RestartOverNight` | **X V2.2** | 🔍 A confirmed root cause, fixed. |
 | 33 | `V33AlfaX-V2.3-Debug-RestartOverNight2` | **X V2.3** | 🔍 "When and why" wasn't enough — needed "**where**". |
 | 34 | `V34AlfaX-V2.4-Debug` | **X V2.4** | 🔍 Blind spot closed. Also mirrored to [`../../stable/`](../../stable/) as the no-Schedule variant. |
-| 35 | `V35AlfaX-V2.4-…-FirstAllOk` | **X V2.4** | ⭐ Everything working. Promoted to [`../../stable/`](../../stable/). |
+| 35 | `V35AlfaX-V2.4-…-FirstAllOk` | **X V2.4** | Everything working. Mirrored to [`../../stable/`](../../stable/). |
+| 36 | `V36Alfa-X-V2.4.1-FRestartDuring` | X V2.4.1 | 🔁 Restarted from `V34`'s baseline to re-verify the V2.4 fixes one at a time instead of trusting them bundled. |
+| 37 | `V37AlfaX-V2.4.2-FFalseTrigger` | X V2.4.2 | Laser confirm window raised `150ms → 600ms` (rejects brief false triggers) · pump **soft-start** ramp added — the inrush current spike from slamming the MOSFET straight to full duty was a real brown-out-reset candidate. |
+| 38 | `V38AlfaX-V2.4.3-FirstTrySchedule` | X V2.4.3 | I²C bus recovery now **deferred while the pump is running** — `sensor.begin()` mid-recovery on a bus the motor is actively flooding with EMI was panicking. Pump **soft-stop** ramp added. NTP is now (re)requested on every WiFi reconnect, not just once in `setup()` — on a slow router, WiFi coming up after the 15 s boot window meant NTP never started and Schedule silently never fired. |
+| 39 | `V39AlfaX-V2.4.4-AllFuncFix` | **X V2.4** | ✅ Re-added per-day/one-shot Schedule entries and a browser-clock fallback (`/settime`, for networks that block outbound NTP) — landing **byte-identical to `V35`**. The re-verification closes here. |
+| 41 | `V41AlfaX-V2.5-Debug-AddBLRemoteLatest` | **X V2.5** | 📻 **BLE iTag remote.** ESP32 connects as a BLE client straight to a cheap iTag keyfob (service `FFE0`/char `FFE1`) — no phone app needed. Button press toggles the pump **continuous**, same override precedence as Touch. Also adds a **Sensor Test Mode** bench toggle that quiets I²C-recovery retries and debug prints when sensors are unplugged. See [`../ModuleTest/`](../ModuleTest/) for the standalone protocol-discovery sketch that preceded this. |
+| 42 | `V42AlfaX-V2.6-Debug-ERRDntShow` | X V2.6 | Water-level ADC now reads a **median of 7 samples** instead of one — a single noisy reading during pump inrush was enough to trip a false "tank empty" block. Thresholds recalibrated (`DRY`/`FULL`/`LOW_PCT`). |
+| 43 | `V43AlfaX-V2.7-Debug-WaterLevelFix` | ⭐ **X V2.7** | Water ADC thresholds recalibrated again with better (though still marked **INTERIM/estimated**) numbers. **Promoted to [`../../stable/`](../../stable/)** as the current recommended build. |
+
+`V35`/`V39`'s exact build is also maintained as its own standalone repository —
+**[PooKooli-Fountain-X-V2.4](https://github.com/devhimoco/PooKooli-Fountain-X-V2.4)**, a
+quick-start README and `secrets.h.example` in place of the full archive here — and is the
+firmware actually flashed on the physical fountain right now, predating the V2.5–V2.7 work
+above. It isn't copied into this repo (see [`VERSION-MANIFEST.md`](../../VERSION-MANIFEST.md)
+for why).
 
 ---
 
@@ -87,3 +103,8 @@ Two sketches here had `.ino` filenames that didn't match their folder, which sto
 Arduino IDE opening them cleanly. Both were corrected (the `V32` folder's file was named
 `V30…`, a copy-paste typo). This matches the filename-typo fixes already recorded in
 [`VERSION-MANIFEST.md`](../../VERSION-MANIFEST.md); no code was touched.
+
+A folder numbered `V40` also exists locally but isn't tracked here: it's a byte-for-byte
+duplicate of `V35` (its `.ino` is even still named after `V35`'s folder), saved as a
+checkpoint right before the V2.5 branch started. Excluded via `.gitignore`, same as the
+nested Beta duplicates — see [`VERSION-MANIFEST.md`](../../VERSION-MANIFEST.md).

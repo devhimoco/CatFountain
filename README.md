@@ -6,7 +6,7 @@
 
 ![Platform](https://img.shields.io/badge/platform-ESP32--DevKitC-3C87C8)
 ![Language](https://img.shields.io/badge/language-Arduino%20C%2B%2B-00979D)
-![Sketches](https://img.shields.io/badge/sketches-57-6E56CF)
+![Sketches](https://img.shields.io/badge/sketches-65-6E56CF)
 ![Generations](https://img.shields.io/badge/sensor%20generations-3-E8830C)
 ![License](https://img.shields.io/badge/license-MIT-2DA44E)
 
@@ -26,7 +26,7 @@ full **web dashboard** from the ESP32 itself — schedules, activity log, live s
 readouts, and crash diagnostics that survive a reboot.
 
 This repository is not just the final firmware. It is the **entire development history**:
-three complete generations of sensing hardware, 57 sketches, every dead end included.
+three complete generations of sensing hardware, 65 sketches, every dead end included.
 
 <div align="center">
   <img src="assets/evolution.svg" alt="Three generations of the PooKooli Fountain: infrared, ultrasonic, laser" width="100%">
@@ -43,13 +43,13 @@ wall that no amount of code could fix.
 |:---:|---|---|:---:|---|
 | **V** | [`1-infrared/`](1-infrared/) | IR / PIR + relay | 18 | PIR detects *body heat in motion* — a cat sitting still to drink stops triggering it. Relay also proved noisy and slow. |
 | **VI** | [`2-ultrasonic/`](2-ultrasonic/) | HC-SR04 ultrasonic | 3 | Reliable distance, but a ~15° beam is far too narrow. Miss the cone by a few centimetres and the cat is invisible. |
-| **X** | [`3-laser/`](3-laser/) | 2× VL53L0X laser ToF | 36 | **Current.** Two narrow, fast, precise beams cover the bowl properly. Millimetre distance, no heat dependency. |
+| **X** | [`3-laser/`](3-laser/) | 2× VL53L0X laser ToF | 44 | **Current.** Two narrow, fast, precise beams cover the bowl properly. Millimetre distance, no heat dependency. |
 
 The jump is visible in the code: Gen V starts with **BLE** and a **relay**, ends with WiFi
 and a MOSFET. Gen X starts from a deliberately stripped-down base and adds one module at a
 time, each verified in isolation first.
 
-> **Current stable release → [`stable/`](stable/) — PooKooli Fountain X V2.4**
+> **Current stable release → [`stable/`](stable/) — PooKooli Fountain X V2.7**
 
 ---
 
@@ -59,8 +59,11 @@ time, each verified in isolation first.
 - 2× VL53L0X laser ToF sensors on one I²C bus (`XSHUT` address reassignment to `0x30`/`0x31`)
 - Per-sensor trigger distance, adjustable live from the web app (5–70 cm)
 - Capacitive touch as a universal manual override — stops any run, or starts one
-- Analogue water-level sensor with a low-water cutoff that blocks the pump
-- MOSFET pump drive via LEDC PWM, ten power levels, with soft-start
+- **BLE remote** — a cheap iTag keyfob connects directly as a BLE client (no phone app), its
+  button toggling the pump like a physical universal-override switch
+- Analogue water-level sensor, median-filtered over 7 samples, with a low-water cutoff that
+  blocks the pump
+- MOSFET pump drive via LEDC PWM, ten power levels, with soft-start and soft-stop
 
 **Web app** (served entirely from the ESP32 — no cloud, no app store)
 - Sidebar dashboard that collapses to a drawer on phones
@@ -96,6 +99,9 @@ with XSHUT, water level, pump MOSFET, touch module and OLED on an ESP32-DevKitC.
 | Touch sensor | `SIG`→GPIO13 (active-HIGH, driven output) |
 | Pump MOSFET | `PWM`→GPIO26 |
 
+The BLE remote (a generic iTag keyfob) needs no wiring — it pairs over Bluetooth, which
+shares the ESP32's radio with WiFi.
+
 ⚠️ **Protect the board.** A DC pump will brown out or crash an ESP32 that shares its rail.
 Fit a flyback diode across the motor and a bulk capacitor on the supply — see
 [`docs/HARDWARE.md`](docs/HARDWARE.md). This was a genuine, repeated failure mode here, not
@@ -109,8 +115,9 @@ a theoretical one.
 git clone https://github.com/devhimoco/CatFountain.git
 ```
 
-1. Open `stable/V35AlfaX-V2.4-Debug-LatestAllDoneFirstAllOk/` in the Arduino IDE.
-2. Install **Adafruit VL53L0X**, **Adafruit SSD1306**, **Adafruit GFX**; select board **ESP32 Dev Module**.
+1. Open `stable/V43AlfaX-V2.7-Debug-WaterLevelFix/` in the Arduino IDE.
+2. Install **Adafruit VL53L0X**, **Adafruit SSD1306**, **Adafruit GFX**, and **NimBLE-Arduino**
+   (for the BLE remote); select board **ESP32 Dev Module**.
 3. Set your WiFi credentials, upload, and open the Serial Monitor at `115200` to find the device IP.
 4. Browse to that IP.
 
@@ -125,10 +132,10 @@ setting: **[`docs/SETUP.md`](docs/SETUP.md)**
 CatFountain/
 ├── 1-infrared/      Gen V   — 18 sketches, IR/PIR + relay  (BLE → WiFi → MOSFET)
 ├── 2-ultrasonic/    Gen VI  —  3 sketches, HC-SR04
-├── 3-laser/         Gen X   — 36 sketches, VL53L0X
-│   ├── ModuleTest/          —  5 isolated per-module test rigs
+├── 3-laser/         Gen X   — 44 sketches, VL53L0X
+│   ├── ModuleTest/          —  6 isolated per-module test rigs
 │   ├── Beta/                — 17 test-track builds (V1.0 → V1.6)
-│   └── Alfa-X/              — 14 complete editions (X V1.0 → X V2.4)
+│   └── Alfa-X/              — 21 complete editions (X V1.0 → X V2.7)
 ├── stable/          The release you should actually flash
 ├── assets/          Schematic, photos, diagrams
 ├── docs/            SETUP.md · HARDWARE.md
@@ -165,6 +172,10 @@ So `BETA V1.6` is the last test build, `X V1.0` is the first complete edition, a
 - The 433 MHz remote (YK04 + PT2272-M4) was tested and **deliberately dropped** — see
   [`3-laser/ModuleTest/`](3-laser/ModuleTest/). Motor EMI beat it even with an antenna and
   filtering; WiFi control proved far more robust.
+- The build actually running on the physical fountain right now is maintained as its own
+  standalone repository —
+  **[PooKooli-Fountain-X-V2.4](https://github.com/devhimoco/PooKooli-Fountain-X-V2.4)** — a
+  single quick-start README instead of this full development history.
 
 ## License
 

@@ -16,6 +16,19 @@ OLD-UNSORTED-BACKUP.zip
 3-laser/Beta/V12-V1.3.2/V10-V1.2-Sensor2LCD/
 3-laser/Beta/V12-V1.3.2/V11-V1.3.1/
 
+# ── Duplicate checkpoint copy ──────────────────────────────────
+# V40 is a byte-for-byte copy of V35 (verified with cmp/diff) saved as a
+# checkpoint before the V2.5 BLE-remote branch started; its internal .ino is
+# even still named after V35's folder. Same class of exclusion as the Beta
+# duplicates above — the content is already tracked at V35/V39.
+3-laser/Alfa-X/V40AlfaX-V2.4-Debug-LatestAllDoneFirstAllOk/
+
+# ── Separate repo, not a subfolder of this one ─────────────────
+# This is its own git repo with its own remote and history, published at
+# github.com/devhimoco/PooKooli-Fountain-X-V2.4 — the standalone "what's
+# actually on the board" build. Cross-linked from the READMEs, not copied in.
+3-laser/Alfa-X/PooKooli-Fountain-X-V2.4-NowOnBoard/
+
 # ── Secrets — never commit real WiFi credentials ──────────────
 secrets.h
 

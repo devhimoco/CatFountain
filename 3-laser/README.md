@@ -1,6 +1,6 @@
 # Generation X — Laser time-of-flight
 
-**36 sketches · the current generation · VL53L0X**
+**44 sketches · the current generation · VL53L0X**
 
 Two VL53L0X laser time-of-flight sensors sharing one I²C bus, each reassigned its own
 address at boot via `XSHUT`. This is the generation that finally answered the question the
@@ -24,9 +24,9 @@ That produces three parallel tracks, all sharing one chronological numbering seq
 
 | Folder | What it holds | Count |
 |---|---|---|
-| [`ModuleTest/`](ModuleTest/) | Each module tested **in isolation** — no pump, no other sensors | 5 |
+| [`ModuleTest/`](ModuleTest/) | Each module tested **in isolation** — no pump, no other sensors | 6 |
 | [`Beta/`](Beta/) | The test track, `BETA V1.0` → `V1.6`, one module added at a time | 17 |
-| [`Alfa-X/`](Alfa-X/) | Complete editions, `X V1.0` → `X V2.4` | 14 |
+| [`Alfa-X/`](Alfa-X/) | Complete editions, `X V1.0` → `X V2.7` | 21 |
 
 So `V03` (a module test) sits chronologically between `V02` and `V04` (Beta builds),
 because that is genuinely when it happened: the sensor was proven alone, then folded into
@@ -57,12 +57,17 @@ V15 rf ✗    ──┘     ↓ +water (V1.4)         │
                                                                         ↓
                                               X V2.4 ◄─ V2.3 ◄─ V2.2 ◄─ V2.1
                                               (crash hunt)
+                                                │
+                                                ▼
+                                    X V2.5 (BLE remote) ─► V2.6 ─► V2.7
+                                                            (water-level fixes)
 ```
 
-The final stretch — `X V2.1` through `X V2.4` — is **not** a feature run. It is a sustained
-hunt for a crash that only appeared overnight, and it produced the diagnostics subsystem
-that is arguably the most useful thing in the whole project. See
-[`Alfa-X/`](Alfa-X/) for that story.
+`X V2.1` through `X V2.4` is **not** a feature run. It is a sustained hunt for a crash that
+only appeared overnight, and it produced the diagnostics subsystem that is arguably the most
+useful thing in the whole project. `X V2.5`–`X V2.7` build on that stable base: a physical
+BLE remote, then two rounds of fixing false "tank empty" trips in the water-level reading.
+See [`Alfa-X/`](Alfa-X/) for both stories.
 
 ---
 
