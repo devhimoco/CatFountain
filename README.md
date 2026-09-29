@@ -172,10 +172,8 @@ So `BETA V1.6` is the last test build, `X V1.0` is the first complete edition, a
 - The 433 MHz remote (YK04 + PT2272-M4) was tested and **deliberately dropped** — see
   [`3-laser/ModuleTest/`](3-laser/ModuleTest/). Motor EMI beat it even with an antenna and
   filtering; WiFi control proved far more robust.
-- The build actually running on the physical fountain right now is maintained as its own
-  standalone repository —
-  **[PooKooli-Fountain-X-V2.4](https://github.com/devhimoco/PooKooli-Fountain-X-V2.4)** — a
-  single quick-start README instead of this full development history.
+- The build actually running on the physical fountain right now is **X V2.4** — the
+  `V35`/`V39` sketch in `3-laser/Alfa-X/`.
 
 ## License
 

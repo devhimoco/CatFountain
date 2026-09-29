@@ -40,12 +40,9 @@ recalibration.
 | 42 | `V42AlfaX-V2.6-Debug-ERRDntShow` | X V2.6 | Water-level ADC now reads a **median of 7 samples** instead of one — a single noisy reading during pump inrush was enough to trip a false "tank empty" block. Thresholds recalibrated (`DRY`/`FULL`/`LOW_PCT`). |
 | 43 | `V43AlfaX-V2.7-Debug-WaterLevelFix` | ⭐ **X V2.7** | Water ADC thresholds recalibrated again with better (though still marked **INTERIM/estimated**) numbers. **Promoted to [`../../stable/`](../../stable/)** as the current recommended build. |
 
-`V35`/`V39`'s exact build is also maintained as its own standalone repository —
-**[PooKooli-Fountain-X-V2.4](https://github.com/devhimoco/PooKooli-Fountain-X-V2.4)**, a
-quick-start README and `secrets.h.example` in place of the full archive here — and is the
-firmware actually flashed on the physical fountain right now, predating the V2.5–V2.7 work
-above. It isn't copied into this repo (see [`VERSION-MANIFEST.md`](../../VERSION-MANIFEST.md)
-for why).
+`V35`/`V39`'s exact build (X V2.4) is the firmware actually flashed on the physical
+fountain right now, predating the V2.5–V2.7 work above (see
+[`VERSION-MANIFEST.md`](../../VERSION-MANIFEST.md)).
 
 ---
 

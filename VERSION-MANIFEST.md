@@ -180,11 +180,8 @@ Full technical detail for each is in [`CHANGELOG.md`](CHANGELOG.md).
 
 A folder matching `V35`/`V39` byte-for-byte (confirmed via `diff`) also exists locally at
 `3-laser/Alfa-X/PooKooli-Fountain-X-V2.4-NowOnBoard/`, but it is **not part of this repo**:
-it's its own git repository with its own remote and 12-commit history, already published at
-[github.com/devhimoco/PooKooli-Fountain-X-V2.4](https://github.com/devhimoco/PooKooli-Fountain-X-V2.4).
-Copying its files in here would have flattened that history, so it's excluded via
-`.gitignore` and cross-linked from the READMEs instead — it's the firmware actually flashed
-on the physical device.
+it's a duplicate of `V35`/`V39`, so it's excluded via `.gitignore` — it's the firmware
+actually flashed on the physical device.
 
 ## New version — `3-laser/ModuleTest/`
 

@@ -23,10 +23,8 @@ OLD-UNSORTED-BACKUP.zip
 # duplicates above — the content is already tracked at V35/V39.
 3-laser/Alfa-X/V40AlfaX-V2.4-Debug-LatestAllDoneFirstAllOk/
 
-# ── Separate repo, not a subfolder of this one ─────────────────
-# This is its own git repo with its own remote and history, published at
-# github.com/devhimoco/PooKooli-Fountain-X-V2.4 — the standalone "what's
-# actually on the board" build. Cross-linked from the READMEs, not copied in.
+# ── Local working copy of the on-board build, not part of this repo ──
+# Identical to V35/V39 (see VERSION-MANIFEST.md).
 3-laser/Alfa-X/PooKooli-Fountain-X-V2.4-NowOnBoard/
 
 # ── Secrets — never commit real WiFi credentials ──────────────

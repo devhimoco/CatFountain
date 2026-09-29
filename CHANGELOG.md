@@ -56,11 +56,8 @@ baseline, then `V37`–`V39` re-added the laser-confirm/soft-start, I²C-recover
 soft-stop, and per-day Schedule/browser-clock fixes one at a time. `V39` lands
 **byte-identical to `V35`**, closing the re-verification.
 
-This exact build is also packaged as its own standalone repository,
-**[PooKooli-Fountain-X-V2.4](https://github.com/devhimoco/PooKooli-Fountain-X-V2.4)** — a
-quick-start README and `secrets.h.example` instead of the full archive here — which is the
-firmware actually flashed on the physical fountain as of this writing, predating the
-V2.5–V2.7 work above.
+This exact build is the firmware actually flashed on the physical fountain as of this
+writing, predating the V2.5–V2.7 work above.
 
 ### X V2.4 — `V34-…-Debug`, `V35-…-LatestAllDoneFirstAllOk`
 A full night of data came back **10/10 PANIC, every entry still reading checkpoint
